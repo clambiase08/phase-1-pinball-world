@@ -15,6 +15,14 @@
 //[x] write a render function for the game details of image, name, and high score by setting those HTML elements equal to the values of the gameobj keys.values in the json data
 //[x] calling the new render function in the .then chained onto the intializer with an array tag [0] so the first game shows on page load
 
+// Challenge #3
+// When the user clicks on one of the games in the list, display all the details of that game.
+
+//Then I need to:
+//[x] add an event listener to the game list that when you click, passes in a callback function to render that game
+
+
+
 //Global variables
 const URL = "http://localhost:3000/games"
 
@@ -46,6 +54,8 @@ function renderGames(gameObj) {
     const game = document.createElement('h5')
     game.textContent = `${gameObj.name} (${gameObj.manufacturer_name})`
     gameList.appendChild(game)
+
+    game.addEventListener('click', () => renderDetail(gameObj))
 }
 
 function renderDetail(gameObj) {
@@ -53,4 +63,3 @@ function renderDetail(gameObj) {
     detailScore.textContent = gameObj.high_score
     image.src = gameObj.image
 }
-
