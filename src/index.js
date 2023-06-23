@@ -21,6 +21,15 @@
 //Then I need to:
 //[x] add an event listener to the game list that when you click, passes in a callback function to render that game
 
+// Challenge #4
+// The user should be able to enter a high score in the form on the right side and have it show that value for "high score".
+
+// The value of the high score does not need to persist between refreshes, but should save state when switching between games.
+
+//Lastly, I need to:
+//[x] select the form in global scope
+//[x] add an event listener to the form that when submitted, passes in a callback that: prevents default, sets a variable equal to the value on the form, changes the value of the high score in the DOM
+
 
 
 //Global variables
@@ -29,8 +38,11 @@ const URL = "http://localhost:3000/games"
 //DOM Selectors
 const gameList = document.querySelector(".game-list")
 const detailTitle = document.querySelector("#detail-title")
-const detailScore = document.querySelector("#detail-high-score")
+let detailScore = document.querySelector("#detail-high-score")
 const image = document.querySelector("#detail-image")
+const form = document.querySelector("#high-score-form")
+const scoreInput = document.querySelector("#score-input")
+let selectedGame;
 
 
 //Fetch function
@@ -59,7 +71,18 @@ function renderGames(gameObj) {
 }
 
 function renderDetail(gameObj) {
+    selectedGame = gameObj
     detailTitle.textContent = gameObj.name
     detailScore.textContent = gameObj.high_score
     image.src = gameObj.image
 }
+
+//Event listeners
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const newScore = parseInt(e.target['score-input'].value)
+    selectedGame.high_score += newScore
+    renderDetail(selectedGame)
+    form.reset()
+})
